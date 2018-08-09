@@ -1,5 +1,6 @@
-import * as Actions from './actionTypes'
-import { IAction } from './reducer';
+import { IAction } from '../../../store/reducer';
+import * as Actions from './constants'
+
 
 export const getFocusSearch = (): IAction => {
   return {
