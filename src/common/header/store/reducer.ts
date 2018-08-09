@@ -13,6 +13,8 @@ const reducer = (state: any = defaultState, action: IAction): IState => {
       return state.set('focused', true);
     case constants.BLUR_SEARCH:
       return state.set('focused', false);
+    case constants.GET_LIST_SUCCESS:
+      return state.set('list', action.payload)
     default:
       return state;
   }
