@@ -46,7 +46,7 @@ const Header = (props: IHeaderProps) => {
 
 const mapStateToProps = (state: any) => {
   return {
-    focused: state.header.focused
+    focused: state.header.get('focused')
   }
 
 }

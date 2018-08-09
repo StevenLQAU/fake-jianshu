@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux';
 import { reducer as headerReducer } from '../common/header/store';
 
-
 export interface IAction {
   type: string;
   payload?: any;
