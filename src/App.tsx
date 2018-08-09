@@ -1,11 +1,10 @@
 import * as React from 'react';
+import { Header } from './common/header';
 
 class App extends React.Component {
   public render() {
     return (
-      <div>
-        hello world
-      </div>
+      <Header />
     );
   }
 }

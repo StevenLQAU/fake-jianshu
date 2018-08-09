@@ -1,5 +1,6 @@
 import { injectGlobal } from 'styled-components';
 
+
 // tslint:disable-next-line:no-unused-expression
 injectGlobal`
 html, body, div, span, applet, object, iframe,
@@ -29,6 +30,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	font-family: Sans-serif Helvetica
 }
 ol, ul {
 	list-style: none;
