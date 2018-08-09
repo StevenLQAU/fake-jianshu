@@ -3,7 +3,8 @@ import { constants } from '.';
 import { IAction, IState } from "../../../store/reducer";
 
 const defaultState = fromJS({
-  focused: false
+  focused: false,
+  list: []
 });
 
 const reducer = (state: any = defaultState, action: IAction): IState => {
