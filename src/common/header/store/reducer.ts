@@ -4,7 +4,11 @@ import { IAction, IState } from "../../../store/reducer";
 
 const defaultState = fromJS({
   focused: false,
-  list: []
+  mouseIn: false,
+  // tslint:disable-next-line:object-literal-sort-keys
+  list: [],
+  page: 1,
+  totalPage: 1
 });
 
 const reducer = (state: any = defaultState, action: IAction): IState => {
@@ -14,7 +18,16 @@ const reducer = (state: any = defaultState, action: IAction): IState => {
     case constants.BLUR_SEARCH:
       return state.set('focused', false);
     case constants.GET_LIST_SUCCESS:
-      return state.set('list', action.payload)
+      return state.merge({
+        list: action.payload.list,
+        totalPage: action.payload.totalPage
+      })
+    case constants.SET_MOUSE_ENTER:
+      return state.set('mouseIn', true);
+    case constants.SET_MOUSE_LEAVE:
+      return state.set('mouseIn', false);
+    case constants.CHANGE_PAGE:
+      return state.set('page', action.payload);
     default:
       return state;
   }

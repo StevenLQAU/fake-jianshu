@@ -5,7 +5,10 @@ import * as Actions from './constants'
 
 const getGetListSuccess = (list: string[]): IAction => {
   return {
-    payload: fromJS(list),
+    payload: {
+      list:fromJS(list),
+      totalPage: Math.ceil(list.length / 10)
+    },  
     type: Actions.GET_LIST_SUCCESS
   }
 }
@@ -28,6 +31,26 @@ export const getGetList = () => {
       const list = res.data.data;
       dispatch(getGetListSuccess(list));
     });
+  }
+}
+
+export const getSetMouseEnter = () => {
+  return {
+    type: Actions.SET_MOUSE_ENTER
+  }
+}
+
+export const getSetMouseLeave = () => {
+  return {
+    type: Actions.SET_MOUSE_LEAVE
+  }
+}
+
+export const getChangePage = (newPage: number) => {
+
+  return {
+    payload: newPage,
+    type: Actions.CHANGE_PAGE
   }
 }
 

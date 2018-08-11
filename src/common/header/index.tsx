@@ -6,28 +6,50 @@ import { Addition, Button, HeaderWrapper, Logo, Nav, NavItem, NavSearch, SearchI
 
 interface IHeaderProps {
   focused?: boolean;
-  list: string[];
+  list: any;
+  page: number;
+  mouseIn: boolean;
+  totalPage: number;
   handleInputFocus: () => {};
   handleInputBlur: () => {};
+  handleMouseEnter: () => {};
+  handleMouseLeave: () => {};
+  handleChangePage: (page: number, totalPage: number, spinIcon: any) => {};
 }
 
 class Header extends React.Component<IHeaderProps> {
+  public spinIcon: any;
 
   public getListArea = () => {
-    const { focused, list} = this.props;
-    if (focused) {
+    const { focused, list, page, totalPage, handleMouseEnter, handleMouseLeave, handleChangePage, mouseIn } = this.props;
+    const jsList = list.toJS();
+    const pageList = [];
+    if (jsList && jsList.length) {
+      for (let i = (page - 1) * 10; i < page * 10; i++) {
+        if(!jsList[i]){
+          break;
+        }
+        pageList.push(<SearchInfoItem key={jsList[i]}>{jsList[i]}</SearchInfoItem>);
+      }
+    }
+
+    if (focused || mouseIn) {
       return (
-        <SearchInfo>
+        <SearchInfo
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
           <SearchInfoTitle>
             Popular Search
-              <SearchInfoSwitch>Change</SearchInfoSwitch>
+              {/*tslint:disable-next-line:jsx-no-lambda */}
+            <SearchInfoSwitch onClick={() => handleChangePage(page, totalPage, this.spinIcon)}>
+              <i ref={(icon)=>{this.spinIcon = icon}} className="iconfont spin">&#xe746;</i>Change
+            </SearchInfoSwitch>
           </SearchInfoTitle>
           <SearchInfoList>
-            { list.map((item)=>{
-              return (
-                <SearchInfoItem key={item}>{item}</SearchInfoItem>
-              )
-            })}
+            {
+              pageList
+            }
           </SearchInfoList>
         </SearchInfo>
       )
@@ -60,7 +82,7 @@ class Header extends React.Component<IHeaderProps> {
                 onBlur={handleInputBlur}
               />
             </CSSTransition>
-            <i className={focused ? 'focused iconfont' : 'iconfont'}>&#xe623;</i>
+            <i className={focused ? 'focused iconfont zoom' : 'iconfont zoom'}>&#xe623;</i>
             {this.getListArea()}
           </SearchWrapper>
         </Nav>
@@ -76,7 +98,11 @@ class Header extends React.Component<IHeaderProps> {
 const mapStateToProps = (state: any) => {
   return {
     focused: state.getIn(['header', 'focused']),
-    list: state.getIn(['header','list'])
+    mouseIn: state.getIn(['header', 'mouseIn']),
+    // tslint:disable-next-line:object-literal-sort-keys
+    list: state.getIn(['header', 'list']),
+    page: state.getIn(['header', 'page']),
+    totalPage: state.getIn(['header', 'totalPage'])
   }
 }
 
@@ -89,6 +115,34 @@ const mapDispatchToProps = (dispatch: any) => {
     handleInputBlur() {
       const action = actionCreators.getBlurSearch();
       dispatch(action);
+    },
+    handleMouseEnter() {
+      dispatch(actionCreators.getSetMouseEnter());
+    },
+    handleMouseLeave() {
+      dispatch(actionCreators.getSetMouseLeave());
+    },
+    handleChangePage(page: number, totalPage: number, spinIcon: any) {
+      
+      let originAngle: any = spinIcon.style.transform.replace(/[^0-9]/ig, '');
+
+      if(originAngle) {
+        // tslint:disable-next-line:radix
+        originAngle = parseInt(originAngle);
+      } else {
+        originAngle = 0;
+      }
+      spinIcon.style.transform = `rotate(${(originAngle as number)+360}deg)`;
+
+      // tslint:disable-next-line:no-console
+      console.log(originAngle);
+
+      if (page < totalPage) {
+        dispatch(actionCreators.getChangePage(page + 1));
+      } else {
+        dispatch(actionCreators.getChangePage(1));
+      }
+
     }
   }
 }
