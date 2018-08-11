@@ -10,7 +10,7 @@ interface IHeaderProps {
   page: number;
   mouseIn: boolean;
   totalPage: number;
-  handleInputFocus: () => {};
+  handleInputFocus: (list: any) => {};
   handleInputBlur: () => {};
   handleMouseEnter: () => {};
   handleMouseLeave: () => {};
@@ -26,7 +26,7 @@ class Header extends React.Component<IHeaderProps> {
     const pageList = [];
     if (jsList && jsList.length) {
       for (let i = (page - 1) * 10; i < page * 10; i++) {
-        if(!jsList[i]){
+        if (!jsList[i]) {
           break;
         }
         pageList.push(<SearchInfoItem key={jsList[i]}>{jsList[i]}</SearchInfoItem>);
@@ -43,7 +43,7 @@ class Header extends React.Component<IHeaderProps> {
             Popular Search
               {/*tslint:disable-next-line:jsx-no-lambda */}
             <SearchInfoSwitch onClick={() => handleChangePage(page, totalPage, this.spinIcon)}>
-              <i ref={(icon)=>{this.spinIcon = icon}} className="iconfont spin">&#xe746;</i>Change
+              <i ref={(icon) => { this.spinIcon = icon }} className="iconfont spin">&#xe746;</i>Change
             </SearchInfoSwitch>
           </SearchInfoTitle>
           <SearchInfoList>
@@ -59,7 +59,7 @@ class Header extends React.Component<IHeaderProps> {
   }
 
   public render() {
-    const { focused, handleInputFocus, handleInputBlur } = this.props;
+    const { focused, handleInputFocus, handleInputBlur, list } = this.props;
     return (
       <HeaderWrapper>
         <Logo>
@@ -78,7 +78,8 @@ class Header extends React.Component<IHeaderProps> {
             >
               <NavSearch
                 className={focused ? 'focused' : ''}
-                onFocus={handleInputFocus}
+                // tslint:disable-next-line:jsx-no-lambda
+                onFocus={() => { handleInputFocus(list) }}
                 onBlur={handleInputBlur}
               />
             </CSSTransition>
@@ -108,8 +109,10 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    handleInputFocus() {
-      dispatch(actionCreators.getGetList())
+    handleInputFocus(list: any) {
+      if(!(list && list.length > 0)) {
+        dispatch(actionCreators.getGetList())
+      }
       dispatch(actionCreators.getFocusSearch());
     },
     handleInputBlur() {
@@ -123,16 +126,16 @@ const mapDispatchToProps = (dispatch: any) => {
       dispatch(actionCreators.getSetMouseLeave());
     },
     handleChangePage(page: number, totalPage: number, spinIcon: any) {
-      
+
       let originAngle: any = spinIcon.style.transform.replace(/[^0-9]/ig, '');
 
-      if(originAngle) {
+      if (originAngle) {
         // tslint:disable-next-line:radix
         originAngle = parseInt(originAngle);
       } else {
         originAngle = 0;
       }
-      spinIcon.style.transform = `rotate(${(originAngle as number)+360}deg)`;
+      spinIcon.style.transform = `rotate(${(originAngle as number) + 360}deg)`;
 
       // tslint:disable-next-line:no-console
       console.log(originAngle);
