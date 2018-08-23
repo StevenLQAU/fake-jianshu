@@ -8,7 +8,8 @@ const defaultState = fromJS({
   // tslint:disable-next-line:object-literal-sort-keys
   list: [],
   page: 1,
-  totalPage: 1
+  totalPage: 1,
+  showScrollToTop: false
 });
 
 const reducer = (state: any = defaultState, action: IAction): IState => {
@@ -28,6 +29,8 @@ const reducer = (state: any = defaultState, action: IAction): IState => {
       return state.set('mouseIn', false);
     case constants.CHANGE_PAGE:
       return state.set('page', action.payload);
+    case constants.CHANGE_SCROLLTOP_SHOW:
+      return state.set('showScrollToTop', action.payload);
     default:
       return state;
   }

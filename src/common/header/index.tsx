@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 import { actionCreators } from './store';
-import { Addition, Button, HeaderWrapper, Logo, Nav, NavItem, NavSearch, SearchInfo, SearchInfoItem, SearchInfoList, SearchInfoSwitch, SearchInfoTitle, SearchWrapper } from './style'
-
+import { Addition, BackToTop, Button, HeaderWrapper, Logo, Nav, NavItem, NavSearch, SearchInfo, SearchInfoItem, SearchInfoList, SearchInfoSwitch, SearchInfoTitle, SearchWrapper, ShareButton } from './style';
 interface IHeaderProps {
   focused?: boolean;
   list: any;
@@ -17,7 +17,7 @@ interface IHeaderProps {
   handleChangePage: (page: number, totalPage: number, spinIcon: any) => {};
 }
 
-class Header extends React.Component<IHeaderProps> {
+class Header extends React.PureComponent<IHeaderProps> {
   public spinIcon: any;
 
   public getListArea = () => {
@@ -58,13 +58,28 @@ class Header extends React.Component<IHeaderProps> {
     }
   }
 
+  public getScrollToTop() {
+    if ((this.props as any).showScrollToTop) {
+      return (
+        /*tslint:disable-next-line:jsx-no-lambda */
+        <BackToTop onClick={() => { this.scrollToTop() }}><i className="iconfont">&#xe614;</i></BackToTop>
+      )
+    } else {
+      return null;
+    }
+
+  }
+
+
   public render() {
     const { focused, handleInputFocus, handleInputBlur, list } = this.props;
     return (
       <HeaderWrapper>
-        <Logo>
-          HAHA
+        <Link to='/'>
+          <Logo>
+            HAHA
         </Logo>
+        </Link>
         <Nav>
           <NavItem className='left active'>Index</NavItem>
           <NavItem className='left'>Download App</NavItem>
@@ -91,8 +106,39 @@ class Header extends React.Component<IHeaderProps> {
           <Button className='writting'><i className="iconfont">&#xe608;</i>Create Article</Button>
           <Button className='join'>Join</Button>
         </Addition>
+        {
+          this.getScrollToTop()
+        }
+
+
+        <ShareButton><i className="iconfont">&#xe621;</i></ShareButton>
       </HeaderWrapper>
     )
+  }
+
+  public componentDidMount() {
+    this.bindEvent();
+  }
+
+  private bindEvent() {
+    window.addEventListener('scroll', (this.props as any).changeScrollbarShow);
+  }
+
+  private scrollToTop = () => {
+    let currentPosition;
+    let timer: any;
+    const speed: number = 15;
+    timer = setInterval(() => {
+      currentPosition = document.documentElement.scrollTop || document.body.scrollTop;
+      currentPosition -= speed;
+      if (currentPosition > 0) {
+        window.scrollTo(0, currentPosition);
+      } else {
+        window.scrollTo(0, 0);
+        clearInterval(timer);
+      }
+    }, 1);
+
   }
 }
 
@@ -103,14 +149,15 @@ const mapStateToProps = (state: any) => {
     // tslint:disable-next-line:object-literal-sort-keys
     list: state.getIn(['header', 'list']),
     page: state.getIn(['header', 'page']),
-    totalPage: state.getIn(['header', 'totalPage'])
+    totalPage: state.getIn(['header', 'totalPage']),
+    showScrollToTop: state.getIn(['header', 'showScrollToTop'])
   }
 }
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
     handleInputFocus(list: any) {
-      if(!(list && list.length > 0)) {
+      if (!(list && list.length > 0)) {
         dispatch(actionCreators.getGetList())
       }
       dispatch(actionCreators.getFocusSearch());
@@ -146,6 +193,10 @@ const mapDispatchToProps = (dispatch: any) => {
         dispatch(actionCreators.getChangePage(1));
       }
 
+    },
+    changeScrollbarShow(e: UIEvent) {
+      // tslint:disable-next-line:no-console
+      dispatch(actionCreators.getChangeScrollTopShow(document.documentElement.scrollTop));
     }
   }
 }

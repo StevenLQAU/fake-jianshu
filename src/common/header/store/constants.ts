@@ -5,3 +5,4 @@ export const GET_LIST_SUCCESS = 'header/get_list_success';
 export const SET_MOUSE_ENTER ='header/set_mouse_enter';
 export const SET_MOUSE_LEAVE = 'header/set_mouse_leave';
 export const CHANGE_PAGE = 'header/change_page';
+export const CHANGE_SCROLLTOP_SHOW='header/change_scrolltop_show';

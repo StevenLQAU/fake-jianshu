@@ -13,6 +13,13 @@ const getGetListSuccess = (list: string[]): IAction => {
   }
 }
 
+const getChangeScrolltopShowSuccess = (show: boolean): IAction => {
+  return {
+    payload: show,
+    type: Actions.CHANGE_SCROLLTOP_SHOW
+  }
+}
+
 export const getFocusSearch = (): IAction => {
   return {
     type: Actions.FOCUS_SEARCH
@@ -47,10 +54,15 @@ export const getSetMouseLeave = () => {
 }
 
 export const getChangePage = (newPage: number) => {
-
   return {
     payload: newPage,
     type: Actions.CHANGE_PAGE
+  }
+}
+
+export const getChangeScrollTopShow = (scrollTop: number) => {
+  return (dispatch: any)=> {
+    dispatch(getChangeScrolltopShowSuccess(scrollTop> 500 ? true : false));
   }
 }
 

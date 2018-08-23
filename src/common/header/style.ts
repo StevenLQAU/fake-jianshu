@@ -6,7 +6,7 @@ export const HeaderWrapper = styled.div`
   border-bottom: 1px solid #f0f0f0;
 `;
 
-export const Logo = styled.a`
+export const Logo = styled.div`
   position: absolute;
   top: 0;
   left: 0;
@@ -176,5 +176,41 @@ export const Button = styled.div`
     .iconfont {
       font-size: 14px;
     }
+  }
+`;
+
+export const ShareButton = styled.div`
+  height: 50px;
+  width: 50px;
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  z-index: 1040;
+  border: 1px solid #dcdcdc;
+  line-height: 50px;
+  text-align: center;
+  background: #fff;
+  .iconfont{
+    font-size: 26px;
+    color: #333;
+  }
+`;
+
+
+export const BackToTop = styled.div`
+  cursor: pointer;
+  height: 50px;
+  width: 50px;
+  position: fixed;
+  bottom: 90px;
+  right: 40px;
+  z-index: 1040;
+  border: 1px solid #dcdcdc;
+  line-height: 50px;
+  text-align: center;
+  background: #fff;
+  .iconfont{
+    font-size: 26px;
+    color: #333;
   }
 `;
