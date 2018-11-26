@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Header from './common/header';
-import { Detail } from './pages/detail';
+import Detail from './pages/detail';
 import { Home } from './pages/home';
 import { store } from './store';
 

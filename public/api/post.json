@@ -1,0 +1,44 @@
+{
+  "success": true,
+  "data": {
+    "id": 1,
+    "title": "This is title",
+    "content": "<p>This is the content of the post.</p><p>This is the content of the post.</p><p>This is the content of the post.</p><p>This is the content of the post.</p><p>This is the content of the post.</p>",
+    "detail": {
+      "dateTime": "2018.07.20 20:34",
+      "wordsCount": 1000,
+
+      "readCount": 100,
+      "comment": 1,
+      "like": 10
+    },
+    "author": {
+      "id": 1,
+      "name": "steven",
+      "avatar": "//upload.jianshu.io/users/upload_avatars/6121595/2a4b2f2b-e68a-405f-a272-d670dd3eb8e0.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"
+    },
+    "comments": [
+      {
+        "id": 1,
+        "author": "steven lu",
+        "dateTime": "2018.07.21 20:34",
+        "content": "This is a comment",
+        "avatar": "//upload.jianshu.io/users/upload_avatars/6121595/2a4b2f2b-e68a-405f-a272-d670dd3eb8e0.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"
+      },
+      {
+        "id": 2,
+        "author": "steven lu",
+        "dateTime": "2018.07.21 20:34",
+        "content": "This is a comment",
+        "avatar": "//upload.jianshu.io/users/upload_avatars/6121595/2a4b2f2b-e68a-405f-a272-d670dd3eb8e0.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"
+      },
+      {
+        "id": 3,
+        "author": "steven lu",
+        "dateTime": "2018.07.21 20:34",
+        "content": "This is a comment",
+        "avatar": "//upload.jianshu.io/users/upload_avatars/6121595/2a4b2f2b-e68a-405f-a272-d670dd3eb8e0.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"
+      }
+    ]
+  }
+}

@@ -109,8 +109,6 @@ class Header extends React.PureComponent<IHeaderProps> {
         {
           this.getScrollToTop()
         }
-
-
         <ShareButton><i className="iconfont">&#xe621;</i></ShareButton>
       </HeaderWrapper>
     )
@@ -138,7 +136,6 @@ class Header extends React.PureComponent<IHeaderProps> {
         clearInterval(timer);
       }
     }, 1);
-
   }
 }
 
